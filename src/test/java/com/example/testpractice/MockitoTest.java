@@ -11,7 +11,7 @@ import org.mockito.Mockito;
 
 import static org.mockito.Mockito.*;
 
-public class MockTest {
+public class MockitoTest {
     @Mock
     TodoService todoService;
 

@@ -3,6 +3,7 @@ package com.example.testpractice.controller;
 import com.example.testpractice.dto.TodoDTO;
 import com.example.testpractice.model.TodoEntity;
 import com.example.testpractice.service.TodoService;
+import com.sun.xml.bind.v2.TODO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -16,8 +17,9 @@ public class TodoController {
     @PostMapping
     public ResponseEntity<?> create(@RequestBody TodoDTO dto){
         TodoEntity entity = dto.toEntity();
-        todoService.save(entity);
-        return ResponseEntity.ok().body("succeed");
+        TodoEntity returnEntity = todoService.save(entity);
+        TodoDTO returnDTO = TodoDTO.builder().id(returnEntity.getId()).Todo(returnEntity.getTodo()).build();
+        return ResponseEntity.ok().body(returnDTO);
     }
 
     @GetMapping("/{id}")
@@ -49,8 +51,8 @@ public class TodoController {
         try{
             todoService.delete(entity);
         }catch(Exception e){
-            return ResponseEntity.badRequest().body(dto.getId().toString() + "is Deleted");
+            return ResponseEntity.badRequest().body("Wrong Id");
         }
-        return ResponseEntity.ok().body(dto);
+        return ResponseEntity.ok().body(dto.getId().toString() + "is Deleted");
     }
 }

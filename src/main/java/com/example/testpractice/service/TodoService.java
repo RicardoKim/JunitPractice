@@ -4,6 +4,7 @@ import com.example.testpractice.dto.TodoDTO;
 import com.example.testpractice.model.TodoEntity;
 import com.example.testpractice.repository.TodoRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -11,8 +12,9 @@ public class TodoService {
     @Autowired
     TodoRepository todoRepository;
 
-    public void save(TodoEntity entity){
-        todoRepository.save(entity);
+    public TodoEntity save(TodoEntity entity){
+        TodoEntity responseEntity = todoRepository.save(entity);
+        return responseEntity;
     }
 
     public TodoDTO find(int id) {
